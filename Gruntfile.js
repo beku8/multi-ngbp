@@ -558,6 +558,7 @@ module.exports = function ( grunt ) {
   };
   var app_files = prefixFiles('app_files');
   app_files.js = app_files.js.concat(shared_files.js);
+  app_files.jsunit = app_files.jsunit.concat(shared_files.jsunit);
 
   grunt.config('shared_files', shared_files);
   grunt.config('pfx.app_files', app_files);
