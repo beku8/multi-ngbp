@@ -450,7 +450,7 @@ module.exports = function ( grunt ) {
        */
       jssrc: {
         files: [ 
-          '<%= app_files.js %>'
+          '<%= pfx.app_files.js %>'
         ],
         tasks: [ 'jshint:src', 'karma:unit:run', 'copy:build_appjs' ]
       },
@@ -461,7 +461,7 @@ module.exports = function ( grunt ) {
        */
       coffeesrc: {
         files: [ 
-          '<%= app_files.coffee %>'
+          '<%= pfx.app_files.coffee %>'
         ],
         tasks: [ 'coffeelint:src', 'coffee:source', 'karma:unit:run', 'copy:build_appjs' ]
       },
@@ -472,7 +472,7 @@ module.exports = function ( grunt ) {
        */
       assets: {
         files: [ 
-          'src/assets/**/*'
+          '<%= head_dir %>/src/assets/**/*'
         ],
         tasks: [ 'copy:build_app_assets', 'copy:build_vendor_assets' ]
       },
@@ -481,7 +481,7 @@ module.exports = function ( grunt ) {
        * When index.html changes, we need to compile it.
        */
       html: {
-        files: [ '<%= app_files.html %>' ],
+        files: [ '<%= pfx.app_files.html %>' ],
         tasks: [ 'index:build' ]
       },
 
@@ -490,8 +490,8 @@ module.exports = function ( grunt ) {
        */
       tpls: {
         files: [ 
-          '<%= app_files.atpl %>', 
-          '<%= app_files.ctpl %>'
+          '<%= pfx.app_files.atpl %>', 
+          '<%= pfx.app_files.ctpl %>'
         ],
         tasks: [ 'html2js' ]
       },
@@ -500,7 +500,7 @@ module.exports = function ( grunt ) {
        * When the CSS files change, we need to compile and minify them.
        */
       less: {
-        files: [ 'src/**/*.less' ],
+        files: [ '<%= head_dir %>/src/**/*.less' ],
         tasks: [ 'less:build' ]
       },
 
@@ -510,7 +510,7 @@ module.exports = function ( grunt ) {
        */
       jsunit: {
         files: [
-          '<%= app_files.jsunit %>'
+          '<%= pfx.app_files.jsunit %>'
         ],
         tasks: [ 'jshint:test', 'karma:unit:run' ],
         options: {
@@ -524,7 +524,7 @@ module.exports = function ( grunt ) {
        */
       coffeeunit: {
         files: [
-          '<%= app_files.coffeeunit %>'
+          '<%= pfx.app_files.coffeeunit %>'
         ],
         tasks: [ 'coffeelint:test', 'karma:unit:run' ],
         options: {
