@@ -9,6 +9,17 @@ module.exports = {
    */
   build_dir: 'build',
   compile_dir: 'bin',
+  /**
+   * Common files to be used by all apps.
+   */
+  common_files: {
+    js: [ 'common/**/*.js', 
+        '!common/**/*.spec.js', '!common/assets/**/*.js' ],
+    jsunit: [ 'common/**/*.spec.js' ],
+    coffee: [ 'common/**/*.coffee', '!common/**/*.spec.coffee' ],
+    coffeeunit: [ 'common/**/*.spec.coffee' ],
+    tpl: [ 'common/**/*.tpl.html' ]
+  },
 
   /**
    * This is a collection of file patterns that refer to our app code (the

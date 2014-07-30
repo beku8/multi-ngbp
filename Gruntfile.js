@@ -567,16 +567,6 @@ module.exports = function ( grunt ) {
   
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
 
-  var common_files = {
-    js: [ 'common/**/*.js', 
-        '!common/**/*.spec.js', '!common/assets/**/*.js' ],
-    jsunit: [ 'common/**/*.spec.js' ],
-    coffee: [ 'common/**/*.coffee', '!common/**/*.spec.coffee' ],
-    coffeeunit: [ 'common/**/*.spec.coffee' ],
-    tpl: [ 'common/**/*.tpl.html' ]
-  };
-
-  grunt.config('common_files', common_files);
   grunt.config('pfx.app_files', prefixFiles('app_files'));
   grunt.config('pfx.vendor_files', prefixFiles('vendor_files'));
   grunt.config('pfx.test_files', prefixFiles('test_files'));
