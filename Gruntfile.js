@@ -288,7 +288,8 @@ module.exports = function ( grunt ) {
         '<%= pfx.app_files.js %>'
       ],
       test: [
-        '<%= pfx.app_files.jsunit %>'
+        '<%= pfx.app_files.jsunit %>',
+        '<%= shared_files.jsunit %>'
       ],
       gruntfile: [
         'Gruntfile.js'
@@ -532,7 +533,8 @@ module.exports = function ( grunt ) {
        */
       jsunit: {
         files: [
-          '<%= pfx.app_files.jsunit %>'
+          '<%= pfx.app_files.jsunit %>',
+          '<%= shared_files.jsunit %>'
         ],
         tasks: [ 'jshint:test', 'karma:unit:run' ],
         options: {
@@ -569,7 +571,6 @@ module.exports = function ( grunt ) {
   };
   var app_files = prefixFiles('app_files');
   app_files.js = app_files.js.concat(shared_files.js);
-  app_files.jsunit = app_files.jsunit.concat(shared_files.jsunit);
 
   grunt.config('shared_files', shared_files);
   grunt.config('pfx.app_files', app_files);
