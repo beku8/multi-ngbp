@@ -193,6 +193,7 @@ module.exports = function ( grunt ) {
           '<%= pfx.build_dir %>/common/**/*.js', 
           '<%= html2js.app.dest %>', 
           '<%= html2js.common.dest %>', 
+          '<%= html2js.lib_common.dest %>',
           'module.suffix' 
         ],
         dest: '<%= pfx.compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.js'
@@ -347,8 +348,15 @@ module.exports = function ( grunt ) {
         options: {
           base: '<%= head_dir %>/src/common'
         },
-        src: [ '<%= pfx.app_files.ctpl %>' ],
+        src: [ '<%= pfx.app_files.ctpl %>'],
         dest: '<%= pfx.build_dir %>/templates-common.js'
+      },
+      lib_common: {
+        options: {
+          base: 'common'
+        },
+        src: [ '<%= shared_files.tpl %>'],
+        dest: '<%= pfx.build_dir %>/templates-lib-common.js'
       }
     },
 
@@ -385,6 +393,7 @@ module.exports = function ( grunt ) {
         src: [
           '<%= pfx.vendor_files.js %>',
           '<%= pfx.app_files.js %>',
+          '<%= html2js.lib_common.dest %>',
           '<%= html2js.common.dest %>',
           '<%= html2js.app.dest %>',
           '<%= pfx.vendor_files.css %>',
@@ -418,6 +427,7 @@ module.exports = function ( grunt ) {
           '<%= pfx.vendor_files.js %>',
           '<%= html2js.app.dest %>',
           '<%= html2js.common.dest %>',
+          '<%= html2js.lib_common.dest %>',
           '<%= pfx.test_files.js %>'
         ]
       }
@@ -554,7 +564,8 @@ module.exports = function ( grunt ) {
   var shared_files = {
     js: [ 'common/**/*.js', 
         '!common/**/*.spec.js', '!common/assets/**/*.js' ],
-    jsunit: [ 'common/**/*.spec.js' ]
+    jsunit: [ 'common/**/*.spec.js' ],
+    tpl: [ 'common/**/*.tpl.html' ]
   };
   var app_files = prefixFiles('app_files');
   app_files.js = app_files.js.concat(shared_files.js);

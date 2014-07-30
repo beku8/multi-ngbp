@@ -4,6 +4,8 @@ describe('HelloWorld', function() {
 
     // Load the myApp module, which contains the directive
     beforeEach(module('hello'));
+    beforeEach(module('templates-lib_common'));
+
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
@@ -19,7 +21,6 @@ describe('HelloWorld', function() {
         // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
         $rootScope.$digest();
         // Check that the compiled element contains the templated content
-        console.log(element.html());
-        expect(element.html()).toContain("Hello world!!!");
+        expect(element.html()).toContain("Hello world");
     });
 });
