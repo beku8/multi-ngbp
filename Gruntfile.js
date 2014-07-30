@@ -130,6 +130,17 @@ module.exports = function ( grunt ) {
           }
         ]
       },
+      //to include common into build
+      build_commonjs: {
+        files: [
+          {
+            src: [ '<%= shared_files.js %>' ],
+            dest: '<%= pfx.build_dir %>/',
+            cwd: '.',
+            expand: true
+          }
+        ]
+      },
       build_vendorjs: {
         files: [
           {
@@ -178,7 +189,8 @@ module.exports = function ( grunt ) {
         src: [ 
           '<%= pfx.vendor_files.js %>', 
           'module.prefix', 
-          '<%= pfx.build_dir %>/src/**/*.js', 
+          '<%= pfx.build_dir %>/src/**/*.js',
+          '<%= pfx.build_dir %>/common/**/*.js', 
           '<%= html2js.app.dest %>', 
           '<%= html2js.common.dest %>', 
           'module.suffix' 
@@ -215,7 +227,7 @@ module.exports = function ( grunt ) {
       compile: {
         files: [
           {
-            src: [ '<%= app_files.js %>' ],
+            src: [ '<%= app_files.js %>', '<%= shared_files.js %>' ],
             cwd: '<%= pfx.build_dir %>',
             dest: '<%= pfx.build_dir %>',
             expand: true
@@ -538,8 +550,17 @@ module.exports = function ( grunt ) {
   // pfx.app_files.atpl = prefixFiles(app_files.atpl);
   
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
-  // grunt.config('pfx.app_files.atpl', prefixFiles('app_files.atpl'));
-  grunt.config('pfx.app_files', prefixFiles('app_files'));
+
+  var shared_files = {
+    js: [ 'common/**/*.js', 
+        '!common/**/*.spec.js', '!common/assets/**/*.js' ],
+    jsunit: [ 'common/**/*.spec.js' ]
+  };
+  var app_files = prefixFiles('app_files');
+  app_files.js = app_files.js.concat(shared_files.js);
+
+  grunt.config('shared_files', shared_files);
+  grunt.config('pfx.app_files', app_files);
   grunt.config('pfx.vendor_files', prefixFiles('vendor_files'));
   grunt.config('pfx.test_files', prefixFiles('test_files'));
   grunt.config('pfx.compile_dir', '<%= head_dir %>/<%= compile_dir %>');
@@ -566,8 +587,8 @@ module.exports = function ( grunt ) {
   grunt.registerTask( 'build', [
     'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build',
     'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
-    'copy:build_appjs', 'copy:build_vendorjs', 'index:build', 'karmaconfig',
-    'karma:continuous' 
+    'copy:build_appjs', 'copy:build_commonjs', 'copy:build_vendorjs', 'index:build',
+    'karmaconfig', 'karma:continuous' 
   ]);
 
   /**
