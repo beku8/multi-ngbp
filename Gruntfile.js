@@ -4,7 +4,7 @@ module.exports = function ( grunt ) {
    * Load required Grunt tasks. These are installed based on the versions listed
    * in `package.json` when you do `npm install` in this directory.
    */
-  
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -29,8 +29,7 @@ module.exports = function ( grunt ) {
    * instructions.
    */
   var taskConfig = {
-    head_dir: 'app1',
-
+    head_dir : 'app1',
     /**
      * We read in our `package.json` file so we can access the package name and
      * version. It's already there, so we don't repeat ourselves here.
@@ -86,11 +85,13 @@ module.exports = function ( grunt ) {
       }
     },    
 
-
-    // clean: [ 
-    //   '<%= head_dir %>/<%= build_dir %>', 
-    //   '<%= head_dir %>/<%= compile_dir %>'
-    // ],
+    /**
+     * The directories to delete when `grunt clean` is executed.
+     */
+    clean: [ 
+      '<%= pfx.build_dir %>', 
+      '<%= pfx.compile_dir %>'
+    ],
 
     /**
      * The `copy` task just copies files from A to B. We use it here to copy
@@ -102,7 +103,7 @@ module.exports = function ( grunt ) {
         files: [
           { 
             src: [ '**' ],
-            dest: '<%= head_dir %>/<%= build_dir %>/assets/',
+            dest: '<%= pfx.build_dir %>/assets/',
             cwd: '<%= head_dir %>/src/assets',
             expand: true
           }
@@ -111,8 +112,8 @@ module.exports = function ( grunt ) {
       build_vendor_assets: {
         files: [
           { 
-            src: [ '<%= head_dir %>/<%= vendor_files.assets %>' ],
-            dest: '<%= head_dir %>/<%= build_dir %>/assets/',
+            src: [ '<%= pfx.vendor_files.assets %>' ],
+            dest: '<%= pfx.build_dir %>/assets/',
             cwd: '.',
             expand: true,
             flatten: true
@@ -122,9 +123,9 @@ module.exports = function ( grunt ) {
       build_appjs: {
         files: [
           {
-            src: [ '<%= head_dir %>/<%= app_files.js %>' ],
-            dest: '<%= head_dir %>/<%= build_dir %>/',
-            cwd: '.',
+            src: [ '<%= app_files.js %>' ],
+            dest: '<%= pfx.build_dir %>/',
+            cwd: '<%= head_dir %>',
             expand: true
           }
         ]
@@ -132,9 +133,9 @@ module.exports = function ( grunt ) {
       build_vendorjs: {
         files: [
           {
-            src: [ '<%= head_dir %>/<%= vendor_files.js %>' ],
-            dest: '<%= head_dir %>/<%= build_dir %>/',
-            cwd: '.',
+            src: [ '<%= vendor_files.js %>' ],
+            dest: '<%= pfx.build_dir %>/',
+            cwd: '<%= head_dir %>',
             expand: true
           }
         ]
@@ -143,8 +144,8 @@ module.exports = function ( grunt ) {
         files: [
           {
             src: [ '**' ],
-            dest: '<%= head_dir %>/<%= compile_dir %>/assets',
-            cwd: '<%= head_dir %>/<%= build_dir %>/assets',
+            dest: '<%= compile_dir %>/assets',
+            cwd: '<%= build_dir %>/assets',
             expand: true
           }
         ]
@@ -161,10 +162,10 @@ module.exports = function ( grunt ) {
        */
       build_css: {
         src: [
-          '<%= head_dir %>/<%= vendor_files.css %>',
-          '<%= head_dir %>/<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
+          '<%= pfx.vendor_files.css %>',
+          '<%= pfx.build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
         ],
-        dest: '<%= head_dir %>/<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
+        dest: '<%= pfx.build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
       },
       /**
        * The `compile_js` target is the concatenation of our application source
@@ -175,14 +176,14 @@ module.exports = function ( grunt ) {
           banner: '<%= meta.banner %>'
         },
         src: [ 
-          '<%= vendor_files.js %>', 
+          '<%= pfx.vendor_files.js %>', 
           'module.prefix', 
-          '<%= build_dir %>/src/**/*.js', 
+          '<%= pfx.build_dir %>/src/**/*.js', 
           '<%= html2js.app.dest %>', 
           '<%= html2js.common.dest %>', 
           'module.suffix' 
         ],
-        dest: '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.js'
+        dest: '<%= pfx.compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.js'
       }
     },
 
@@ -245,12 +246,14 @@ module.exports = function ( grunt ) {
     less: {
       build: {
         files: {
-          '<%= head_dir %>/<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= head_dir %>/<%= app_files.less %>'
+          '<%= pfx.build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': 
+          '<%= pfx.app_files.less %>'
         }
       },
       compile: {
         files: {
-          '<%= head_dir %>/<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= head_dir %>/<%= app_files.less %>'
+          '<%= pfx.build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': 
+          '<%= pfx.app_files.less %>'
         },
         options: {
           cleancss: true,
@@ -269,10 +272,10 @@ module.exports = function ( grunt ) {
      */
     jshint: {
       src: [ 
-        '<%= head_dir %>/<%= app_files.js %>'
+        '<%= pfx.app_files.js %>'
       ],
       test: [
-        '<%= head_dir %>/<%= app_files.jsunit %>'
+        '<%= pfx.app_files.jsunit %>'
       ],
       gruntfile: [
         'Gruntfile.js'
@@ -321,8 +324,8 @@ module.exports = function ( grunt ) {
         options: {
           base: '<%= head_dir %>/src/app'
         },
-        src: '<%= head_dir %>/<%= app_files.atpl %>',
-        dest: '<%= head_dir %>/<%= build_dir %>/templates-app.js'
+        src: '<%= pfx.app_files.atpl %>',
+        dest: '<%= pfx.build_dir %>/templates-app.js'
       },
 
       /**
@@ -332,8 +335,8 @@ module.exports = function ( grunt ) {
         options: {
           base: '<%= head_dir %>/src/common'
         },
-        src: [ '<%= head_dir %>/<%= app_files.ctpl %>' ],
-        dest: '<%= head_dir %>/<%= build_dir %>/templates-common.js'
+        src: [ '<%= pfx.app_files.ctpl %>' ],
+        dest: '<%= pfx.build_dir %>/templates-common.js'
       }
     },
 
@@ -342,7 +345,7 @@ module.exports = function ( grunt ) {
      */
     karma: {
       options: {
-        configFile: '<%= build_dir %>/karma-unit.js'
+        configFile: '<%= pfx.build_dir %>/karma-unit.js'
       },
       unit: {
         port: 9019,
@@ -366,14 +369,14 @@ module.exports = function ( grunt ) {
        * `src` property contains the list of included files.
        */
       build: {
-        dir: '<%= build_dir %>',
+        dir: '<%= pfx.build_dir %>',
         src: [
-          '<%= vendor_files.js %>',
-          '<%= build_dir %>/app1/src/**/*.js',
+          '<%= pfx.vendor_files.js %>',
+          '<%= pfx.app_files.js %>',
           '<%= html2js.common.dest %>',
           '<%= html2js.app.dest %>',
-          '<%= vendor_files.css %>',
-          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
+          '<%= pfx.vendor_files.css %>',
+          '<%= pfx.build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
         ]
       },
 
@@ -383,11 +386,11 @@ module.exports = function ( grunt ) {
        * file. Now we're back!
        */
       compile: {
-        dir: '<%= compile_dir %>',
+        dir: '<%= pfx.compile_dir %>',
         src: [
           '<%= concat.compile_js.dest %>',
-          '<%= vendor_files.css %>',
-          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
+          '<%= pfx.vendor_files.css %>',
+          '<%= pfx.build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
         ]
       }
     },
@@ -398,12 +401,12 @@ module.exports = function ( grunt ) {
      */
     karmaconfig: {
       unit: {
-        dir: '<%= build_dir %>',
+        dir: '<%= pfx.build_dir %>',
         src: [ 
-          '<%= vendor_files.js %>',
+          '<%= pfx.vendor_files.js %>',
           '<%= html2js.app.dest %>',
           '<%= html2js.common.dest %>',
-          '<%= test_files.js %>'
+          '<%= pfx.test_files.js %>'
         ]
       }
     },
@@ -531,8 +534,16 @@ module.exports = function ( grunt ) {
     }
   };
 
+  // var pfx = {app_files:{}};
+  // pfx.app_files.atpl = prefixFiles(app_files.atpl);
+  
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
-  grunt.loadTasks('grunt-tasks');
+  // grunt.config('pfx.app_files.atpl', prefixFiles('app_files.atpl'));
+  grunt.config('pfx.app_files', prefixFiles('app_files'));
+  grunt.config('pfx.vendor_files', prefixFiles('vendor_files'));
+  grunt.config('pfx.test_files', prefixFiles('test_files'));
+  grunt.config('pfx.compile_dir', '<%= head_dir %>/<%= compile_dir %>');
+  grunt.config('pfx.build_dir', '<%= head_dir %>/<%= build_dir %>');
 
   /**
    * In order to make it safe to just compile or copy *only* what was changed,
@@ -567,6 +578,44 @@ module.exports = function ( grunt ) {
     'less:compile', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile'
   ]);
 
+  function prefixFiles(path){
+    var obj = grunt.config(path);
+    var prefix = grunt.config('head_dir');
+    var result = {};
+
+    var _decorate = function(file){
+      if((/^!/).test(file)){
+        file = file.slice(0, 1) + prefix + "/" + file.slice(1);
+      }
+      else{
+        file = prefix + "/" + file;
+      }
+      return file;
+    };
+
+    for (var property in obj) {
+      if (obj.hasOwnProperty(property)) {
+        var files = obj[property];
+        if(grunt.util.kindOf(files) === 'array'){
+          for (var i = files.length - 1; i >= 0; i--) {
+            files[i] = _decorate(files[i]);
+          }
+        }
+        else{
+          files = _decorate(files);
+        }
+        result[property] = files;
+      }
+    }
+    console.log(result);
+    return result;
+  }
+
+
+  grunt.registerTask('prefix', function(){
+    prefixFiles('app_files.js');
+  });
+
   /**
    * A utility function to get all app JavaScript sources.
    */
@@ -592,18 +641,18 @@ module.exports = function ( grunt ) {
    * compilation.
    */
   grunt.registerMultiTask( 'index', 'Process index.html template', function () {
-    var dirRE = new RegExp( '^('+grunt.config('build_dir')+'|'+grunt.config('compile_dir')+')\/', 'g' );
+    var build_dir = grunt.config('head_dir') + "/" + grunt.config('build_dir');
+    var compile_dir = grunt.config('head_dir') + "/" + grunt.config('compile_dir');
+    var head_dir = grunt.config('head_dir');
+    var dirRE = new RegExp( '^('+build_dir+'|'+compile_dir+'|'+head_dir+')\/', 'g' );
     var jsFiles = filterForJS( this.filesSrc ).map( function ( file ) {
-      console.log(file);
-      var result = file.replace( dirRE, '' );
-      console.log(' ',file);
-      return result;
+      return file.replace( dirRE, '' );
     });
     var cssFiles = filterForCSS( this.filesSrc ).map( function ( file ) {
       return file.replace( dirRE, '' );
     });
 
-    grunt.file.copy(grunt.config('head_dir') +'/src/index.html', this.data.dir + '/index.html', { 
+    grunt.file.copy(grunt.config('head_dir') + '/src/index.html', this.data.dir + '/index.html', { 
       process: function ( contents, path ) {
         return grunt.template.process( contents, {
           data: {
@@ -622,15 +671,18 @@ module.exports = function ( grunt ) {
    * compiled as grunt templates for use by Karma. Yay!
    */
   grunt.registerMultiTask( 'karmaconfig', 'Process karma config templates', function () {
-    var jsFiles = filterForJS( this.filesSrc );
-    console.log('jsFiles', jsFiles);
-    var head_dir = grunt.config( 'head_dir' );
-    grunt.file.copy('karma/karma-unit.tpl.js', grunt.config( 'build_dir' ) + '/karma-unit.js', { 
+    var head_dir = grunt.config('head_dir');
+    var dirRE = new RegExp( '^('+head_dir+')\/', 'g' );
+
+    var jsFiles = filterForJS( this.filesSrc ).map( function ( file ) {
+      return file.replace( dirRE, '' );
+    });
+    
+    grunt.file.copy( 'karma/karma-unit.tpl.js', this.data.dir + '/karma-unit.js', { 
       process: function ( contents, path ) {
         return grunt.template.process( contents, {
           data: {
-            scripts: jsFiles,
-            head_dir: head_dir
+            scripts: jsFiles
           }
         });
       }
