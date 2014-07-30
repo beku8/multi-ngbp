@@ -201,8 +201,8 @@ module.exports = function ( grunt ) {
         },
         expand: true,
         cwd: '.',
-        src: [ '<%= app_files.coffee %>' ],
-        dest: '<%= build_dir %>',
+        src: [ '<%= pfx.app_files.coffee %>' ],
+        dest: '<%= pfx.build_dir %>',
         ext: '.js'
       }
     },
@@ -300,12 +300,12 @@ module.exports = function ( grunt ) {
     coffeelint: {
       src: {
         files: {
-          src: [ '<%= app_files.coffee %>' ]
+          src: [ '<%= pfx.app_files.coffee %>' ]
         }
       },
       test: {
         files: {
-          src: [ '<%= app_files.coffeeunit %>' ]
+          src: [ '<%= pfx.app_files.coffeeunit %>' ]
         }
       }
     },
