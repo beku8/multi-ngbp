@@ -144,8 +144,8 @@ module.exports = function ( grunt ) {
         files: [
           {
             src: [ '**' ],
-            dest: '<%= compile_dir %>/assets',
-            cwd: '<%= build_dir %>/assets',
+            dest: '<%= pfx.compile_dir %>/assets',
+            cwd: '<%= pfx.build_dir %>/assets',
             expand: true
           }
         ]
@@ -216,8 +216,8 @@ module.exports = function ( grunt ) {
         files: [
           {
             src: [ '<%= app_files.js %>' ],
-            cwd: '<%= build_dir %>',
-            dest: '<%= build_dir %>',
+            cwd: '<%= pfx.build_dir %>',
+            dest: '<%= pfx.build_dir %>',
             expand: true
           }
         ]
