@@ -134,7 +134,7 @@ module.exports = function ( grunt ) {
       build_commonjs: {
         files: [
           {
-            src: [ '<%= shared_files.js %>' ],
+            src: [ '<%= common_files.js %>' ],
             dest: '<%= pfx.build_dir %>/',
             cwd: '.',
             expand: true
@@ -214,7 +214,7 @@ module.exports = function ( grunt ) {
         },
         expand: true,
         cwd: '.',
-        src: [ '<%= pfx.app_files.coffee %>' ],
+        src: [ '<%= pfx.app_files.coffee %>', '<%= common_files.coffee %>' ],
         dest: '<%= pfx.build_dir %>',
         ext: '.js'
       }
@@ -228,7 +228,7 @@ module.exports = function ( grunt ) {
       compile: {
         files: [
           {
-            src: [ '<%= app_files.js %>', '<%= shared_files.js %>' ],
+            src: [ '<%= app_files.js %>', '<%= common_files.js %>' ],
             cwd: '<%= pfx.build_dir %>',
             dest: '<%= pfx.build_dir %>',
             expand: true
@@ -285,11 +285,12 @@ module.exports = function ( grunt ) {
      */
     jshint: {
       src: [ 
-        '<%= pfx.app_files.js %>'
+        '<%= pfx.app_files.js %>',
+        '<%= common_files.js %>'
       ],
       test: [
         '<%= pfx.app_files.jsunit %>',
-        '<%= shared_files.jsunit %>'
+        '<%= common_files.jsunit %>'
       ],
       gruntfile: [
         'Gruntfile.js'
@@ -314,12 +315,12 @@ module.exports = function ( grunt ) {
     coffeelint: {
       src: {
         files: {
-          src: [ '<%= pfx.app_files.coffee %>' ]
+          src: [ '<%= pfx.app_files.coffee %>', '<%= common_files.coffee %>' ]
         }
       },
       test: {
         files: {
-          src: [ '<%= pfx.app_files.coffeeunit %>' ]
+          src: [ '<%= pfx.app_files.coffeeunit %>', '<%= common_files.coffeeunit %>' ]
         }
       }
     },
@@ -356,7 +357,7 @@ module.exports = function ( grunt ) {
         options: {
           base: 'common'
         },
-        src: [ '<%= shared_files.tpl %>'],
+        src: [ '<%= common_files.tpl %>'],
         dest: '<%= pfx.build_dir %>/templates-lib-common.js'
       }
     },
@@ -394,6 +395,7 @@ module.exports = function ( grunt ) {
         src: [
           '<%= pfx.vendor_files.js %>',
           '<%= pfx.app_files.js %>',
+          '<%= common_files.js %>',
           '<%= html2js.lib_common.dest %>',
           '<%= html2js.common.dest %>',
           '<%= html2js.app.dest %>',
@@ -473,9 +475,10 @@ module.exports = function ( grunt ) {
        */
       jssrc: {
         files: [ 
-          '<%= pfx.app_files.js %>'
+          '<%= pfx.app_files.js %>',
+          '<%= common_files.js %>'
         ],
-        tasks: [ 'jshint:src', 'karma:unit:run', 'copy:build_appjs' ]
+        tasks: [ 'jshint:src', 'karma:unit:run', 'copy:build_appjs', 'copy:build_commonjs' ]
       },
 
       /**
@@ -484,7 +487,8 @@ module.exports = function ( grunt ) {
        */
       coffeesrc: {
         files: [ 
-          '<%= pfx.app_files.coffee %>'
+          '<%= pfx.app_files.coffee %>',
+          '<%= common_files.coffee %>'
         ],
         tasks: [ 'coffeelint:src', 'coffee:source', 'karma:unit:run', 'copy:build_appjs' ]
       },
@@ -534,7 +538,7 @@ module.exports = function ( grunt ) {
       jsunit: {
         files: [
           '<%= pfx.app_files.jsunit %>',
-          '<%= shared_files.jsunit %>'
+          '<%= common_files.jsunit %>'
         ],
         tasks: [ 'jshint:test', 'karma:unit:run' ],
         options: {
@@ -563,17 +567,17 @@ module.exports = function ( grunt ) {
   
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
 
-  var shared_files = {
+  var common_files = {
     js: [ 'common/**/*.js', 
         '!common/**/*.spec.js', '!common/assets/**/*.js' ],
     jsunit: [ 'common/**/*.spec.js' ],
+    coffee: [ 'common/**/*.coffee', '!common/**/*.spec.coffee' ],
+    coffeeunit: [ 'common/**/*.spec.coffee' ],
     tpl: [ 'common/**/*.tpl.html' ]
   };
-  var app_files = prefixFiles('app_files');
-  app_files.js = app_files.js.concat(shared_files.js);
 
-  grunt.config('shared_files', shared_files);
-  grunt.config('pfx.app_files', app_files);
+  grunt.config('common_files', common_files);
+  grunt.config('pfx.app_files', prefixFiles('app_files'));
   grunt.config('pfx.vendor_files', prefixFiles('vendor_files'));
   grunt.config('pfx.test_files', prefixFiles('test_files'));
   grunt.config('pfx.compile_dir', '<%= head_dir %>/<%= compile_dir %>');
