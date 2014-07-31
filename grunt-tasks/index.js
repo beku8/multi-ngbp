@@ -21,7 +21,8 @@ module.exports = function(grunt) {
           '<%= html2js.app.dest %>',
           '<%= vendor_files.css %>',
           '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
-        ]
+        ],
+        env: 'dev'
       },
 
       /**
@@ -35,7 +36,8 @@ module.exports = function(grunt) {
           '<%= concat.compile_js.dest %>',
           '<%= vendor_files.css %>',
           '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
-        ]
+        ],
+        env: 'dev'
       }
     });
 
@@ -58,13 +60,19 @@ module.exports = function(grunt) {
       return file.replace( dirRE, '' );
     });
 
+    var env = this.data.env;
+    if(env === 'dev'){
+      jsFiles.push('http://127.0.0.1:'+grunt.config('lrPort')+'/livereload.js');
+    }
+
     grunt.file.copy('src/index.html', this.data.dir + '/index.html', { 
       process: function ( contents, path ) {
         return grunt.template.process( contents, {
           data: {
             scripts: jsFiles,
             styles: cssFiles,
-            version: grunt.config( 'pkg.version' )
+            version: grunt.config( 'pkg.version' ),
+            env:env 
           }
         });
       }

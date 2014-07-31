@@ -18,7 +18,9 @@ module.exports = function(grunt) {
      * plugin should auto-detect.
      */
     options: {
-      livereload: true
+      livereload: {
+        port: '<%= lrPort %>'
+      }
     },
 
     /**
