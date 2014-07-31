@@ -37,7 +37,7 @@ module.exports = function(grunt) {
           '<%= vendor_files.css %>',
           '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
         ],
-        env: 'dev'
+        env: 'prod'
       }
     });
 

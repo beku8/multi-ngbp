@@ -2,7 +2,13 @@
  * This file/module contains all configuration for the build process.
  */
 module.exports = {
+
   lrPort:35730,
+
+  server: {
+    port: 4444,
+    hostname: 'localhost'
+  },
 
   /**
    * This is the same as `app_files`, except it contains patterns that
