@@ -22,13 +22,7 @@ module.exports = function(grunt) {
    * compiled as grunt templates for use by Karma. Yay!
    */
   grunt.registerMultiTask( 'karmaconfig', 'Process karma config templates', function () {
-    // var head_dir = grunt.config('head_dir');
-    // var dirRE = new RegExp( '^('+head_dir+')\/', 'g' );
-
-    // var jsFiles = filterForJS( this.filesSrc ).map( function ( file ) {
-    //   return file.replace( dirRE, '' );
-    // });
-
+    
     var jsFiles = grunt.filterForJS( this.filesSrc );
     
     grunt.file.copy( '../karma/karma-unit.tpl.js', this.data.dir + '/karma-unit.js', { 
@@ -43,6 +37,3 @@ module.exports = function(grunt) {
   });
 
 };
-
-
-    

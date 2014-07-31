@@ -4,10 +4,8 @@ module.exports = function ( grunt ) {
    * Load required Grunt tasks. These are installed based on the versions listed
    * in `package.json` when you do `npm install` in this directory.
    */
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-conventional-changelog');
   grunt.loadNpmTasks('grunt-bump');
-  grunt.loadNpmTasks('grunt-ngmin');
   
   /**
    * Load in our build configuration file.
@@ -19,7 +17,6 @@ module.exports = function ( grunt ) {
    * instructions.
    */
   var taskConfig = {
-    head_dir : 'app1',
     /**
      * We read in our `package.json` file so we can access the package name and
      * version. It's already there, so we don't repeat ourselves here.
@@ -75,48 +72,12 @@ module.exports = function ( grunt ) {
       }
     },    
 
-    /**
-     * `ng-min` annotates the sources before minifying. That is, it allows us
-     * to code without the array syntax.
-     */
-    ngmin: {
-      compile: {
-        files: [
-          {
-            src: [ '<%= app_files.js %>', '<%= common_files.js %>' ],
-            cwd: '<%= pfx.build_dir %>',
-            dest: '<%= pfx.build_dir %>',
-            expand: true
-          }
-        ]
-      }
-    },
-
-    /**
-     * Minify the sources!
-     */
-    uglify: {
-      compile: {
-        options: {
-          banner: '<%= meta.banner %>'
-        },
-        files: {
-          '<%= concat.compile_js.dest %>': '<%= concat.compile_js.dest %>'
-        }
-      }
-    }
-
   };
 
   // var pfx = {app_files:{}};
   // pfx.app_files.atpl = prefixFiles(app_files.atpl);
   
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
-  grunt.config('pfx.app_files', prefixFiles('app_files'));
-  grunt.config('pfx.vendor_files', prefixFiles('vendor_files'));
-  grunt.config('pfx.test_files', prefixFiles('test_files'));
-  grunt.config('pfx.compile_dir', '<%= head_dir %>/<%= compile_dir %>');
-  grunt.config('pfx.build_dir', '<%= head_dir %>/<%= build_dir %>');
   grunt.task.loadTasks('../grunt-tasks');
 
   /**
@@ -151,39 +112,6 @@ module.exports = function ( grunt ) {
   grunt.registerTask( 'compile', [
     'less:compile', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile'
   ]);
-
-  function prefixFiles(path){
-    var obj = grunt.config(path);
-    var prefix = grunt.config('head_dir');
-    var result = {};
-
-    var _decorate = function(file){
-      if((/^!/).test(file)){
-        file = file.slice(0, 1) + prefix + "/" + file.slice(1);
-      }
-      else{
-        file = prefix + "/" + file;
-      }
-      return file;
-    };
-
-    for (var property in obj) {
-      if (obj.hasOwnProperty(property)) {
-        var files = obj[property];
-        if(grunt.util.kindOf(files) === 'array'){
-          for (var i = files.length - 1; i >= 0; i--) {
-            files[i] = _decorate(files[i]);
-          }
-        }
-        else{
-          files = _decorate(files);
-        }
-        result[property] = files;
-      }
-    }
-    console.log(result);
-    return result;
-  }
 
 
   /**
