@@ -1,7 +1,7 @@
 multi-ngbp
 =========
 
-This is an [ngbp](github.com/ngbp/ngbp) wrapper which makes it easy to develop multiple projects by:
+This is an [ngbp](https://github.com/ngbp/ngbp) wrapper which makes it easy to develop multiple projects by:
 
   - Share common/library codes between *builds* & *compiles*.
   - Run them similtaneously without port overlaps.
