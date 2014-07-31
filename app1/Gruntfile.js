@@ -5,12 +5,11 @@ module.exports = function ( grunt ) {
    * in `package.json` when you do `npm install` in this directory.
    */
   grunt.loadNpmTasks('grunt-conventional-changelog');
-  grunt.loadNpmTasks('grunt-bump');
   
   /**
    * Load in our build configuration file.
    */
-  var userConfig = require( '../build.config.js' );
+  var userConfig = require( './build.config.js' );
 
   /**
    * This is the configuration object Grunt uses to give each plugin its 
@@ -47,30 +46,7 @@ module.exports = function ( grunt ) {
         dest: 'CHANGELOG.md',
         template: 'changelog.tpl'
       }
-    },
-
-    /**
-     * Increments the version number, etc.
-     */
-    bump: {
-      options: {
-        files: [
-          "package.json", 
-          "bower.json"
-        ],
-        commit: false,
-        commitMessage: 'chore(release): v%VERSION%',
-        commitFiles: [
-          "package.json", 
-          "client/bower.json"
-        ],
-        createTag: false,
-        tagName: 'v%VERSION%',
-        tagMessage: 'Version %VERSION%',
-        push: false,
-        pushTo: 'origin'
-      }
-    },    
+    }
 
   };
 
