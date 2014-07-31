@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     
     var jsFiles = grunt.filterForJS( this.filesSrc );
     
-    grunt.file.copy( '../karma/karma-unit.tpl.js', this.data.dir + '/karma-unit.js', { 
+    grunt.file.copy( '../grunt_conf/karma/karma-unit.tpl.js', this.data.dir + '/karma-unit.js', { 
       process: function ( contents, path ) {
         return grunt.template.process( contents, {
           data: {
