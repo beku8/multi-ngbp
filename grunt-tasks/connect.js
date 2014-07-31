@@ -7,8 +7,7 @@ module.exports = function(grunt) {
       options: {
         port: '<%= server.port %>',
         hostname: '<%= server.hostname %>',
-        base: './<%= build_dir %>',
-        open: true
+        base: './<%= build_dir %>'
       }
     }
   });
