@@ -4,7 +4,6 @@ module.exports = function ( grunt ) {
    * Load required Grunt tasks. These are installed based on the versions listed
    * in `package.json` when you do `npm install` in this directory.
    */
-  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -17,8 +16,7 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-coffeelint');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-ngmin');
-  grunt.loadNpmTasks('grunt-html2js');
-
+  
   /**
    * Load in our build configuration file.
    */
@@ -88,10 +86,10 @@ module.exports = function ( grunt ) {
     /**
      * The directories to delete when `grunt clean` is executed.
      */
-    clean: [ 
-      '<%= pfx.build_dir %>', 
-      '<%= pfx.compile_dir %>'
-    ],
+    // clean: [ 
+    //   '<%= pfx.build_dir %>', 
+    //   '<%= pfx.compile_dir %>'
+    // ],
 
     /**
      * The `copy` task just copies files from A to B. We use it here to copy
@@ -326,43 +324,6 @@ module.exports = function ( grunt ) {
     },
 
     /**
-     * HTML2JS is a Grunt plugin that takes all of your template files and
-     * places them into JavaScript files as strings that are added to
-     * AngularJS's template cache. This means that the templates too become
-     * part of the initial payload as one JavaScript file. Neat!
-     */
-    html2js: {
-      /**
-       * These are the templates from `src/app`.
-       */
-      app: {
-        options: {
-          base: '<%= head_dir %>/src/app'
-        },
-        src: '<%= pfx.app_files.atpl %>',
-        dest: '<%= pfx.build_dir %>/templates-app.js'
-      },
-
-      /**
-       * These are the templates from `src/common`.
-       */
-      common: {
-        options: {
-          base: '<%= head_dir %>/src/common'
-        },
-        src: [ '<%= pfx.app_files.ctpl %>'],
-        dest: '<%= pfx.build_dir %>/templates-common.js'
-      },
-      lib_common: {
-        options: {
-          base: 'common'
-        },
-        src: [ '<%= common_files.tpl %>'],
-        dest: '<%= pfx.build_dir %>/templates-lib-common.js'
-      }
-    },
-
-    /**
      * The Karma configurations.
      */
     karma: {
@@ -566,12 +527,12 @@ module.exports = function ( grunt ) {
   // pfx.app_files.atpl = prefixFiles(app_files.atpl);
   
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
-
   grunt.config('pfx.app_files', prefixFiles('app_files'));
   grunt.config('pfx.vendor_files', prefixFiles('vendor_files'));
   grunt.config('pfx.test_files', prefixFiles('test_files'));
   grunt.config('pfx.compile_dir', '<%= head_dir %>/<%= compile_dir %>');
   grunt.config('pfx.build_dir', '<%= head_dir %>/<%= build_dir %>');
+  grunt.task.loadTasks('grunt-tasks');
 
   /**
    * In order to make it safe to just compile or copy *only* what was changed,

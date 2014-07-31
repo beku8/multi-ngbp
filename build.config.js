@@ -13,12 +13,12 @@ module.exports = {
    * Common files to be used by all apps.
    */
   common_files: {
-    js: [ 'common/**/*.js', 
-        '!common/**/*.spec.js', '!common/assets/**/*.js' ],
-    jsunit: [ 'common/**/*.spec.js' ],
-    coffee: [ 'common/**/*.coffee', '!common/**/*.spec.coffee' ],
-    coffeeunit: [ 'common/**/*.spec.coffee' ],
-    tpl: [ 'common/**/*.tpl.html' ]
+    js: [ '../common/**/*.js', 
+        '!../common/**/*.spec.js', '!../common/assets/**/*.js' ],
+    jsunit: [ '../common/**/*.spec.js' ],
+    coffee: [ '../common/**/*.coffee', '!../common/**/*.spec.coffee' ],
+    coffeeunit: [ '../common/**/*.spec.coffee' ],
+    tpl: [ '../common/**/*.tpl.html' ]
   },
 
   /**
