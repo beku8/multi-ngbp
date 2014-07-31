@@ -1,11 +1,5 @@
 module.exports = function ( grunt ) {
-  
-  /** 
-   * Load required Grunt tasks. These are installed based on the versions listed
-   * in `package.json` when you do `npm install` in this directory.
-   */
-  grunt.loadNpmTasks('grunt-conventional-changelog');
-  
+    
   /**
    * Load in our build configuration file.
    */
@@ -36,16 +30,6 @@ module.exports = function ( grunt ) {
         ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
         ' * Licensed <%= pkg.licenses.type %> <<%= pkg.licenses.url %>>\n' +
         ' */\n'
-    },
-
-    /**
-     * Creates a changelog on a new version.
-     */
-    changelog: {
-      options: {
-        dest: 'CHANGELOG.md',
-        template: 'changelog.tpl'
-      }
     }
 
   };
