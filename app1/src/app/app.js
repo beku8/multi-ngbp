@@ -5,7 +5,8 @@ angular.module( 'ngBoilerplate', [
   'ngBoilerplate.home',
   'ngBoilerplate.about',
   'ui.router',
-  'hello'
+  'hello',
+  'foo'
 ])
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
