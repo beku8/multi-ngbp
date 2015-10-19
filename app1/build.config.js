@@ -12,6 +12,14 @@ module.exports = {
 
   deps: ['common1/**', 'common2/**'],
 
+  cdn_files:{
+    js: [
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js'
+    ]
+  },
+
   /**
    * This is the same as `app_files`, except it contains patterns that
    * reference vendor code (`vendor/`) that we need to place into the build
@@ -32,11 +40,7 @@ module.exports = {
    */
   vendor_files: {
     js: [
-      'vendor/angular/angular.js',
-      'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-      'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
-      'vendor/angular-ui-router/release/angular-ui-router.js',
-      'vendor/angular-ui-utils/modules/route/route.js',
+      'vendor/angular-ui-utils/modules/route/route.js'
     ],
     css: [
     ],

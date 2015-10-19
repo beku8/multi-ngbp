@@ -51,6 +51,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask( 'index', 'Process index.html template', function () {
     var build_dir = grunt.config('build_dir');
     var compile_dir = grunt.config('compile_dir');
+    var cdnScripts = grunt.config('cdn_files.js');
     var common_dir = "..";
     var dirRE = new RegExp( '^('+build_dir+'|'+compile_dir+'|'+common_dir+')\/', 'g' );
     var jsFiles = grunt.filterForJS( this.filesSrc ).map( function ( file ) {
@@ -70,6 +71,7 @@ module.exports = function(grunt) {
         return grunt.template.process( contents, {
           data: {
             scripts: jsFiles,
+            cdnScripts: cdnScripts,
             styles: cssFiles,
             version: grunt.config( 'pkg.version' ),
             env:env 
