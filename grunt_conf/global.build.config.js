@@ -10,7 +10,6 @@ module.exports = {
   build_dir: 'build',
   compile_dir: 'bin',
   lib_dir: 'lib',
-  deps: ['common1/**', 'common2/**'],
   /**
    * Common files to be used by all apps.
    */

@@ -10,6 +10,8 @@ module.exports = {
     hostname: 'localhost'
   },
 
+  deps: ['common1/**'],
+
   /**
    * This is the same as `app_files`, except it contains patterns that
    * reference vendor code (`vendor/`) that we need to place into the build
