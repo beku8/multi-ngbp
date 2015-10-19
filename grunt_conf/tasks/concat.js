@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         '<%= vendor_files.js %>', 
         '../grunt_conf/module.prefix', 
         '<%= build_dir %>/src/**/*.js',
-        '<%= build_dir %>/common/**/*.js', 
+        '<%= build_dir %>/lib/**/*.js', 
         '<%= html2js.app.dest %>', 
         '<%= html2js.common.dest %>', 
         '<%= html2js.lib_common.dest %>',

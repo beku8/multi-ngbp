@@ -19,8 +19,8 @@ module.exports = function(grunt) {
         {
           src: [ '<%= common_files.js %>'],
           //add /common to work as relative path
-          cwd: '<%= build_dir %>/common',
-          dest: '<%= build_dir %>/common',
+          cwd: '<%= build_dir %>',
+          dest: '<%= build_dir %>',
           expand: true
         }
       ]
