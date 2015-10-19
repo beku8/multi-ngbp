@@ -19,12 +19,13 @@ Structure
   |-- Gruntfile.js
   |-- package.json ...
 -- app2/ 
--- common/
+-- common1/
+-- common2/
 -- grunt_conf/
 ```
 
   - ```app1 & app2``` : your regular ngbp application
-  - ```common```: you can include .js, .spec, .tpl.html files and it will be treated as if it was in the ```src``` folder
+  - ```common1 & common2```: you can include .js, .spec, .tpl.html, .less files and it will be treated as if it was in the ```src``` folder
   - ```grunt_conf```: grunt related tasks & other configruation.
 
 Quick start
@@ -33,6 +34,7 @@ After cloning the repo you should enter each *app* folders & install dependencie
  
 ```sh
 $ sudo npm -g install grunt-cli karma bower
+$ cd app1
 $ npm install
 $ bower install
 $ grunt watch
