@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 	  },
 	  lib_common: {
 	    options: {
-	      base: '../common'
+	      base: 'lib'
 	    },
 	    src: [ '<%= common_files.tpl %>'],
 	    dest: '<%= build_dir %>/templates-lib-common.js'

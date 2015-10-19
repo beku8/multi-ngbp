@@ -6,16 +6,18 @@ module.exports = function(grunt) {
  */
   grunt.config('less', {
     build: {
-      files: {
-        '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': 
-        '<%= app_files.less %>'
-      }
+      files: [{
+        src:['<%= app_files.less %>', '<%= common_files.less %>'],
+        dest:'<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css',
+        ext:'css'
+      }]
     },
     compile: {
-      files: {
-        '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': 
-        '<%= app_files.less %>'
-      },
+      files:[{
+        src:['<%= app_files.less %>', '<%= common_files.less %>'],
+        dest:'<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css',
+        ext:'css'
+      }],
       options: {
         cleancss: true,
         compress: true

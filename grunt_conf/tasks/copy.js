@@ -5,6 +5,16 @@ module.exports = function(grunt) {
  * `build_dir`, and then to copy the assets to `compile_dir`.
  */
   grunt.config('copy', {
+    lib: {
+      files: [
+        { 
+          src: [ '<%= deps %>' ],
+          dest: '<%= lib_dir %>/',
+          cwd: '../',
+          expand: true
+        }
+     ]
+    },
     build_app_assets: {
       files: [
         { 
@@ -41,7 +51,7 @@ module.exports = function(grunt) {
         {
           src: [ '<%= common_files.js %>' ],
           //puts common just to include it in build finally.
-          dest: '<%= build_dir %>/common',
+          dest: '<%= build_dir %>/',
           expand: true
         }
       ]

@@ -2,6 +2,6 @@ angular.module('hello', [])
 
 .directive('helloWorld', function() {
 	return {
-		templateUrl: 'hello/hello.tpl.html'
+		templateUrl: 'common1/hello/hello.tpl.html'
 	};
 });

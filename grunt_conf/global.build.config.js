@@ -9,16 +9,19 @@ module.exports = {
    */
   build_dir: 'build',
   compile_dir: 'bin',
+  lib_dir: 'lib',
+  deps: ['common1/**', 'common2/**'],
   /**
    * Common files to be used by all apps.
    */
   common_files: {
-    js: [ '../common/**/*.js', 
-        '!../common/**/*.spec.js', '!../common/assets/**/*.js' ],
-    jsunit: [ '../common/**/*.spec.js' ],
-    coffee: [ '../common/**/*.coffee', '!../common/**/*.spec.coffee' ],
-    coffeeunit: [ '../common/**/*.spec.coffee' ],
-    tpl: [ '../common/**/*.tpl.html' ]
+    js: [ 'lib/**/*.js', 
+        '!lib/**/*.spec.js', '!lib/*/assets/**/*.js' ],
+    jsunit: [ 'lib/**/*.spec.js' ],
+    coffee: [ 'lib/**/*.coffee', '!lib/**/*.spec.coffee' ],
+    coffeeunit: [ 'lib/**/*.spec.coffee' ],
+    tpl: [ 'lib/**/*.tpl.html' ],
+    less: ['lib/**/*.less' ]
   },
 
   /**
