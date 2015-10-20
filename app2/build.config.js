@@ -12,6 +12,10 @@ module.exports = {
 
   deps: ['common1/**'],
 
+  cdn_files:{
+    js:[]
+  },
+
   /**
    * This is the same as `app_files`, except it contains patterns that
    * reference vendor code (`vendor/`) that we need to place into the build
