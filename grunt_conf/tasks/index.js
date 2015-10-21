@@ -63,7 +63,7 @@ module.exports = function(grunt) {
 
     var env = this.data.env;
     if(env === 'dev'){
-      jsFiles.push('http://127.0.0.1:'+grunt.config('lrPort')+'/livereload.js');
+      cdnScripts.push('http://127.0.0.1:'+grunt.config('lrPort')+'/livereload.js');
     }
 
     grunt.file.copy('src/index.html', this.data.dir + '/index.html', { 
