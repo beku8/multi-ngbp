@@ -1,5 +1,9 @@
 module.exports = function(grunt) {
 
+  var lib_deps = grunt.config('deps').map(function(dep){
+    return '../' + dep;
+  });
+
 /**
  * And for rapid development, we have a watch set up that checks to see if
  * any of the files listed below change, and then to execute the listed 
@@ -33,6 +37,11 @@ module.exports = function(grunt) {
       options: {
         livereload: false
       }
+    },
+
+    libfile: {
+      files: lib_deps,
+      tasks: ['build']
     },
 
     /**
