@@ -4,6 +4,7 @@ module.exports = function(grunt) {
     return '../' + dep;
   });
 
+
 /**
  * And for rapid development, we have a watch set up that checks to see if
  * any of the files listed below change, and then to execute the listed 
@@ -39,9 +40,13 @@ module.exports = function(grunt) {
       }
     },
 
+    /**
+     * When the deps change, it copies to the lib
+     * and triggers other changes
+     */
     libfile: {
       files: lib_deps,
-      tasks: ['build']
+      tasks: ['copy:lib']
     },
 
     /**
@@ -103,7 +108,7 @@ module.exports = function(grunt) {
      * When the CSS files change, we need to compile and minify them.
      */
     less: {
-      files: [ 'src/**/*.less' ],
+      files: [ 'src/**/*.less', '<%= common_files.less %>' ],
       tasks: [ 'less:build' ]
     },
 
